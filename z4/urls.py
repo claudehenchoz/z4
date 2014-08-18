@@ -7,6 +7,8 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'z4.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-
+    
+    url(r'^buzz/', include('buzz.urls')),
+    
     url(r'^admin/', include(admin.site.urls)),
 )

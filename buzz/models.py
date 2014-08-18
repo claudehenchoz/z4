@@ -7,3 +7,9 @@ class BuzzItem(models.Model):
     source = models.CharField(max_length=32)
     url = models.CharField(max_length=512)
     date = models.DateTimeField('date published')
+
+    def __unicode__(self):
+        return "%s: %s - %s" % (self.source, self.date.strftime("%Y-%m-%d %H:%M"), self.title)
+
+    class Meta:
+        ordering = ['-date']
