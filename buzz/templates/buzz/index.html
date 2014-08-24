@@ -1,34 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>buzz</title>
-    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/lumen/bootstrap.min.css" rel="stylesheet">
+    <title>{{ source }} - {{ time }}</title>
+
 </head>
 <body>
-
-<h1>buzz</h1>
-{% if latest_buzz_list %}
-    {% for buzz in latest_buzz_list %}
-        <h2>{{ buzz.title }} 
-            <span style="font-size:small;text-decoration:none" ><a href="{{ buzz.url }}">></a> {{ buzz.date }}</span></h2>
-        
-        <p><em>{{ buzz.blurb }}</em></p>
-        {% autoescape off %}
-        <div>{{ buzz.content }}</div>
-        {% endautoescape %}
-    {% endfor %}
-{% else %}
-    <p>No buzz is available :'(</p>
-{% endif %}
-
-
+    {% if latest_buzz_list %}
+        {% for buzz in latest_buzz_list %}
+            <h2>{{ buzz.title }}</h2>
+            <span style="font-size:small;text-decoration:none" ><a href="{{ buzz.url }}">{{ buzz.source }}</a> {{ buzz.date }}</span>
+            <p><em>{{ buzz.blurb }}</em></p>
+            {% autoescape off %}
+            <div>{{ buzz.content }}</div>
+            {% endautoescape %}
+        {% endfor %}
+    {% else %}
+        <p>No buzz is available :'(</p>
+    {% endif %}
 </body>
 </html>
-
-
-
-
-
-
-
-
