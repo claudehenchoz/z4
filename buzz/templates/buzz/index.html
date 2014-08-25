@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8" />
     <title>{{ source }} - {{ time }}</title>
-
+    <style>
+        body, h2 {font-family: Georgia,serif; font-size: 1.2em}
+        .srcheader {font-size: small; text-decoration:none}
+    </style>
 </head>
 <body>
     {% if latest_buzz_list %}
         {% for buzz in latest_buzz_list %}
             <h2>{{ buzz.title }}</h2>
-            <span style="font-size:small;text-decoration:none" ><a href="{{ buzz.url }}">{{ buzz.source }}</a> {{ buzz.date }}</span>
+            <span class="srcheader"><a class="srcheader" href="{{ buzz.url }}">{{ buzz.source }}</a> {{ buzz.date }}</span>
             <p><em>{{ buzz.blurb }}</em></p>
             {% autoescape off %}
             <div>{{ buzz.content }}</div>
