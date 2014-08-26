@@ -13,6 +13,9 @@ import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'z4.settings'
 
 
+USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0"
+
+
 BOT_NAME = 'buzz_crawler'
 
 SPIDER_MODULES = ['buzz_crawler.spiders']
