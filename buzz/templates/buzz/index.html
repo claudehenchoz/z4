@@ -4,11 +4,19 @@
     <meta charset="UTF-8" />
     <title>{{ source }} - {{ time }}</title>
     <style>
-        body, h2 {font-family: Georgia,serif; font-size: 1.2em}
+        body, h2 {font-family: Georgia,serif}
         .srcheader {font-size: small; text-decoration:none}
     </style>
 </head>
 <body>
+    {% if isindex %}
+        <p>
+            <a href="tagesanzeiger.ch"/>tagi</a>
+            <a href="limmattalerzeitung.ch">liz</a>
+            <a href="rockpapershotgun.com"/>rps</a>
+        </p>
+    {% endif %}
+
     {% if latest_buzz_list %}
         {% for buzz in latest_buzz_list %}
             <h2>{{ buzz.title }}</h2>
