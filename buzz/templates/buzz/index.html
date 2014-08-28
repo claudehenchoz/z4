@@ -4,9 +4,11 @@
     <meta charset="UTF-8" />
     <title>{{ source }} - {{ time }}</title>
     <style>
-        body, h2 {font-family: Georgia,serif}
-        .srcheader {font-size: small; text-decoration:none}
+        body, h2 { font-family: 'Georgia', serif; }
+        .l {font-size: small; text-decoration:none}
+        hr {border: none;height: 1px;background-color: #ddd;}
     </style>
+    <script>function s(h){location.hash="#"+h;}</script>
 </head>
 <body>
     {% if isindex %}
@@ -20,12 +22,15 @@
 
     {% if latest_buzz_list %}
         {% for buzz in latest_buzz_list %}
-            <h2>{{ buzz.title }}</h2>
-            <span class="srcheader"><a class="srcheader" href="{{ buzz.url }}">{{ buzz.source }}</a> {{ buzz.date }}</span>
-            <p><em>{{ buzz.blurb }}</em></p>
-            {% autoescape off %}
-            <div>{{ buzz.content }}</div>
-            {% endautoescape %}
+            <h2 id="{{ forloop.counter0 }}">{{ buzz.title }}</h2>
+            <span class="l"><a class="l" href="{{ buzz.url }}">{{ buzz.source }}</a> {{ buzz.date }}</span>
+            <span onclick="s('{{ forloop.counter }}');">
+                <p><em>{{ buzz.blurb }}</em></p>
+                {% autoescape off %}
+                <div>{{ buzz.content }}</div>
+                {% endautoescape %}
+                <hr/>
+            </span>
         {% endfor %}
     {% else %}
         <p>No buzz is available :'(</p>

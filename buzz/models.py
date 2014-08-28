@@ -16,6 +16,6 @@ class BuzzItem(models.Model):
         ordering = ['-date']
 
     def save(self, *args, **kwargs):
-        time_threshold = datetime.now() - timedelta(days=1)
+        time_threshold = datetime.now() - timedelta(days=3)
         BuzzItem.objects.filter(date__lt=time_threshold).delete() # remove old stuff
         super(BuzzItem, self).save(*args, **kwargs)
