@@ -20,9 +20,6 @@ class RpsSpider(CrawlSpider):
         item = BuzzCrawlerItem()
 
         item['url'] = response.url
-
-        stringdate = hxs.select("/html/body/div[2]/div[2]/div[1]/div[1]/div[1]/div/div[1]/p[1]//text()").extract()[2]
-        item['date'] = dateutil.parser.parse(stringdate)
         item['title'] = hxs.select("//div[@class='post-inner']/h2/a/text()").extract()[0]
         item['blurb'] = ""
 

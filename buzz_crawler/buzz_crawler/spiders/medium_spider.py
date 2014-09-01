@@ -11,36 +11,34 @@ from buzz_crawler.items import BuzzCrawlerItem
 from markdown import markdown
 
 
-class TagiSpider(CrawlSpider):
-    name = 'tagi'
-    allowed_domains = ['www.tagesanzeiger.ch']
-    start_urls = ['http://www.tagesanzeiger.ch/']
+class MediumSpider(CrawlSpider):
+    name = 'medium'
+    allowed_domains = ['medium.com']
+    start_urls = ['https://medium.com/']
 
     def handle_blog(self, response):
         hxs = HtmlXPathSelector(response)
         item = BuzzCrawlerItem()
 
         item['url'] = response.url
-        item['title'] = hxs.xpath("//div[@id='article']/h1/text()").extract()[0].strip()
-        item['blurb'] = hxs.xpath("//div[@id='article']/h3/text()").extract()[0].strip()
+        item['title'] = hxs.xpath(".//div[@class='section-inner layoutSingleColumn']/h2/text()|.//div[@class='section-inner layoutSingleColumn']/h3/text()").extract()[0].strip()
+        item['blurb'] = hxs.xpath(".//div[@class='section-inner layoutSingleColumn']/h4/text()|.//div[@class='section-inner layoutSingleColumn']/p/text()").extract()[0].strip()
 
-        unprocessed_content = hxs.xpath("//div[@id='mainContent']").extract()[0]
-
+        unprocessed_content = hxs.xpath(".//div[@class='section-inner layoutSingleColumn']").extract()[1]
         h = html2text.HTML2Text()
         h.ignore_links = True
         h.ignore_images = True
-
         processed_content = h.handle(unprocessed_content)
 
-        item['content'] = markdown(processed_content)
-        item['source'] = 'tagesanzeiger.ch'
+        item['content'] = re.sub('(?s)<h3>Recommended<\/h3>.*<\/ul>', '', markdown(processed_content))
+        item['source'] = 'medium.com'
         yield item
 
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
-        posts = hxs.xpath("//div[@class='featureStory standard']")
+        posts = hxs.xpath(".//h3[@class='block-title']")
         
         for post in posts:
-            post_link = post.xpath("h3/a/@href").extract()[0]
+            post_link = post.xpath("a/@href").extract()[0]
             post_absolute_url = urlparse.urljoin(response.url, post_link.strip())
             yield Request(post_absolute_url, self.handle_blog)

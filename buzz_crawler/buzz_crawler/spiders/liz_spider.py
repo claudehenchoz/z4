@@ -21,8 +21,6 @@ class LizSpider(CrawlSpider):
         item = BuzzCrawlerItem()
 
         item['url'] = response.url
-
-        item['date'] = datetime.datetime.now()
         item['title'] = hxs.xpath(".//*[@id='articledetail']/div/h1/text()").extract()[0].strip()
         item['blurb'] = hxs.xpath(".//*[@id='articledetail']/div/div[@class='box anriss']/text()").extract()[0].strip()
 
